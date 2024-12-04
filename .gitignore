@@ -1,0 +1,9 @@
+/vendor
+/node_modules
+/builds
+/.idea
+/.vagrant
+/.cache
+/_site
+.phpunit.result.cache
+.env
