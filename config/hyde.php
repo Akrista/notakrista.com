@@ -25,6 +25,7 @@
 use Hyde\Enums\Feature;
 use Hyde\Facades\Author;
 use Hyde\Facades\Meta;
+use Hyde\Framework\Features\Navigation\NavItem;
 
 return [
 
@@ -38,7 +39,7 @@ return [
     |
     */
 
-    'name' => env('SITE_NAME', 'HydePHP'),
+    'name' => env('SITE_NAME', 'notAkrista'),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('SITE_URL', 'http://localhost'),
+    'url' => env('SITE_URL', 'https://www.notakrista.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +81,7 @@ return [
     |
     */
 
-    'pretty_urls' => false,
+    'pretty_urls' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -116,7 +117,7 @@ return [
         'filename' => 'feed.xml',
 
         // The channel description.
-        'description' => env('SITE_NAME', 'HydePHP').' RSS Feed',
+        'description' => env('SITE_NAME', 'notakrista').' RSS Feed',
     ],
 
     /*
@@ -216,12 +217,22 @@ return [
     */
 
     'meta' => [
-        // Meta::name('author', 'Mr. Hyde'),
-        // Meta::name('twitter:creator', '@HydeFramework'),
-        // Meta::name('description', 'My Hyde Blog'),
-        // Meta::name('keywords', 'Static Sites, Blogs, Documentation'),
-        Meta::name('generator', 'HydePHP v'.Hyde\Hyde::version()),
+        Meta::name('author', 'Jorge Thomas'),
+        Meta::name('description', ''),
+        Meta::name('keywords', ''),
+        Meta::name('generator', 'HydePHP '.Hyde\Hyde::version()),
+        Meta::name('twitter:card', 'summary'),
+        Meta::name('twitter:site', '@notakrista'),
+        Meta::name('twitter:creator', '@notakrista'),
+        Meta::name('twitter:title', ''),
+        Meta::name('twitter:description', ''),
+        // Meta::name('twitter:image', ''),
         Meta::property('site_name', env('SITE_NAME', 'HydePHP')),
+        Meta::property('url', 'https://www.notakrista.com/'),
+        Meta::property('title', 'notakrista - Jorge Thomas'),
+        Meta::property('description', ''),
+        // Meta::property('image', ''),
+        // Meta::property('image:alt', ''),
     ],
 
     /*
@@ -258,14 +269,14 @@ return [
         Feature::MarkdownPosts,
         Feature::BladePages,
         Feature::MarkdownPages,
-        Feature::DocumentationPages,
+        // Feature::DocumentationPages,
 
         // Frontend Features
         Feature::Darkmode,
-        Feature::DocumentationSearch,
+        // Feature::DocumentationSearch,
 
         // Integrations
-        Feature::Torchlight,
+        // Feature::Torchlight,
     ],
 
     /*
@@ -286,9 +297,9 @@ return [
 
     'authors' => [
         Author::create(
-            'mr_hyde', // Required username
-            'Mr. Hyde', // Optional display name
-            'https://hydephp.com' // Optional website URL
+            'akrista', // Required username
+            'Jorge Thomas', // Optional display name
+            'https://www.notakrista.com' // Optional website URL
         ),
     ],
 
@@ -330,7 +341,7 @@ return [
         // Lower values show up first in the menu. The default is 999.
         'order' => [
             'index' => 0,
-            'posts' => 10,
+            'posts' => 1200,
             'docs/index' => 100,
         ],
 
@@ -350,13 +361,17 @@ return [
             '429',
             '500',
             '503',
+            'legal',
+            'license',
+            'security',
+            'sitemap',
         ],
 
         // Any extra links you want to add to the navigation menu can be added here.
         // To get started quickly, you can uncomment the defaults here.
         // See the documentation link above for more information.
         'custom' => [
-            // NavItem::forLink('https://github.com/hydephp/hyde', 'GitHub', 200),
+            NavItem::forLink('https://github.com/akrista', 'GitHub', 1200),
         ],
 
         // How should pages in subdirectories be displayed in the menu?
@@ -418,7 +433,7 @@ return [
     |
     */
 
-    'default_color_scheme' => 'light',
+    'default_color_scheme' => 'dark',
 
     /*
     |--------------------------------------------------------------------------
@@ -433,10 +448,10 @@ return [
 
     'server' => [
         // The default port the preview is served on
-        'port' => env('SERVER_PORT', 8080),
+        'port' => env('SERVER_PORT', 8000),
 
         // The default host the preview is served on
-        'host' => env('SERVER_HOST', 'localhost'),
+        'host' => env('SERVER_HOST', '0.0.0.0'),
 
         // Should preview pages be saved to the output directory?
         'save_preview' => true,
@@ -447,7 +462,7 @@ return [
         // Configure the realtime compiler dashboard
         'dashboard' => [
             // Should the realtime compiler dashboard be enabled?
-            'enabled' => env('SERVER_DASHBOARD', true),
+            'enabled' => env('SERVER_DASHBOARD', false),
 
             // Can the dashboard make edits to the project file system?
             'interactive' => true,

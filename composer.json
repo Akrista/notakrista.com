@@ -47,6 +47,12 @@
     "post-autoload-dump": [
       "@php -r \"@unlink('./app/storage/framework/cache/packages.php');\"",
       "@php hyde package:discover --ansi"
+    ],
+    "pint": [
+      "vendor/bin/pint"
+    ],
+    "rector": [
+      "vendor/bin/rector"
     ]
   },
   "config": {
