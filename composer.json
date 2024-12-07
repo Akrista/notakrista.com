@@ -8,7 +8,9 @@
     "hydephp",
     "static site generator",
     "static site framework",
-    "ssg"
+    "ssg",
+    "portfolio",
+    "blog"
   ],
   "homepage": "https://notakrista.com",
   "type": "project",

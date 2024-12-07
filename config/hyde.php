@@ -81,7 +81,7 @@ return [
     |
     */
 
-    'pretty_urls' => true,
+    'pretty_urls' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -219,7 +219,7 @@ return [
     'meta' => [
         Meta::name('author', 'Jorge Thomas'),
         Meta::name('description', ''),
-        Meta::name('keywords', ''),
+        Meta::name('keywords', 'HydePHP, Blog, Hyde, PHP, PHP Framework, Laravel, Docker, Developer, TailwindCSS, Open Source, JavaScript, SQL, Laravel Zero, FilamentPHP, Redis, PostgreSQL, MySQL, SQLite, Blade, Front Matter,Portfolio, Website'),
         Meta::name('generator', 'HydePHP '.Hyde\Hyde::version()),
         Meta::name('twitter:card', 'summary'),
         Meta::name('twitter:site', '@notakrista'),
@@ -319,7 +319,7 @@ return [
     |
     */
 
-    'footer' => 'Site proudly built with [HydePHP](https://github.com/hydephp/hyde) 🎩',
+    'footer' => 'This website is [Open Source](https://github.com/akrista/notakrista.com) and proudly built with [HydePHP](https://github.com/hydephp/hyde) 🎩',
 
     /*
     |--------------------------------------------------------------------------
@@ -341,15 +341,15 @@ return [
         // Lower values show up first in the menu. The default is 999.
         'order' => [
             'index' => 0,
-            'posts' => 1200,
-            'docs/index' => 100,
+            'projects' => 1,
+            'stats' => 2,
+            'posts' => 3,
         ],
 
         // In case you want to customize the labels for the menu items, you can do so here.
         // Simply add the route key as the array key, and the label as the value.
         'labels' => [
             'index' => 'Home',
-            'docs/index' => 'Docs',
         ],
 
         // These are the route keys of pages that should not show up in the navigation menu.
@@ -371,7 +371,7 @@ return [
         // To get started quickly, you can uncomment the defaults here.
         // See the documentation link above for more information.
         'custom' => [
-            NavItem::forLink('https://github.com/akrista', 'GitHub', 1200),
+            // NavItem::forLink('https://github.com/akrista', 'GitHub', 1200),
         ],
 
         // How should pages in subdirectories be displayed in the menu?

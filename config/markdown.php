@@ -31,6 +31,7 @@ return [
     'extensions' => [
         \League\CommonMark\Extension\GithubFlavoredMarkdownExtension::class,
         \League\CommonMark\Extension\Attributes\AttributesExtension::class,
+        \League\CommonMark\Extension\Footnote\FootnoteExtension::class,
     ],
 
     /*
@@ -62,7 +63,7 @@ return [
     |
     */
 
-    'allow_html' => false,
+    'allow_html' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -79,7 +80,7 @@ return [
     |
     */
 
-    'enable_blade' => false,
+    'enable_blade' => true,
 
     /*
     |--------------------------------------------------------------------------

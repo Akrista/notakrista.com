@@ -1,33 +1,15 @@
-# This is a basic workflow to help you get started with using HydePHP with GitHub Actions
-
 name: Build & Deploy
-
-# Controls when the workflow will run
 on:
-  # We only want to run this workflow when changes are pushed to the master/main branch
   push:
     branches: ["master"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # First we need to build the site
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so the job can access it
       - uses: actions/checkout@v4
-
-      # (optional) Validate the Composer files to catch any errors early on
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
-
-      # (optional) Cache the Composer packages to speed up future builds
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v4
@@ -36,18 +18,33 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
-
-      # Install the Composer packages
       - name: Install dependencies
-        run: composer i --prefer-dist --no-progress
-
-      # Now we can build the site! We do this using the HydeCLI
+        run: composer install --prefer-dist --no-progress
       - name: Build the site
-        run: php hyde build --no-interaction
-
-      # Our site is now compiled into the _site directory, so we'll upload it to an artifact to use in the next job
+        run: php hyde build --no-interaction --pretty-urls
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
           name: site
           path: _site
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "gh-pages"
+      - name: Empty site directory
+        run: rm -rf *
+      - name: Download site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: "."
+      - name: Create .nojekyll file
+        run: touch .nojekyll
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "."
+          message: "Upload compiled site ${{ github.sha }}"
