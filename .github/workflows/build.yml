@@ -8,14 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: php-actions/composer@v6
-        with:
-          php_version: "8.4"
       - uses: actions/setup-node@v2
         with:
           node-version: "22"
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
       - name: Cache node modules
         uses: actions/cache@v3
         env:
@@ -31,8 +26,16 @@ jobs:
         run: npm i
       - name: Build frontend assets
         run: npm run prod
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.4"
+          args: --prefer-dist --no-progress
       - name: Build the site
-        run: php hyde build --pretty-urls --run-prettier
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.4"
+          command: build
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
