@@ -26,16 +26,14 @@ jobs:
         run: npm i
       - name: Build frontend assets
         run: npm run prod
-      - name: Install dependencies
-        uses: php-actions/composer@v6
+      - uses: "shivammathur/setup-php@v2"
         with:
-          php_version: "8.4"
-          args: --prefer-dist --no-progress
+          php-version: "8.4"
+      - uses: "ramsey/composer-install@v3"
+        with:
+          composer-options: --prefer-dist --no-progress
       - name: Build the site
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.4"
-          command: build
+        run: php hyde build --pretty-urls --run-prettier
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
