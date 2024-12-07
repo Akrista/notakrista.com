@@ -55,6 +55,9 @@
     ],
     "rector": [
       "vendor/bin/rector"
+    ],
+    "build": [
+      "@php hyde build --pretty-urls --run-prettier"
     ]
   },
   "config": {
