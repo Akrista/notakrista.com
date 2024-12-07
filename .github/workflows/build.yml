@@ -1,0 +1,70 @@
+name: Build & Deploy
+on:
+  push:
+    branches: ["master"]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "22"
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install Node dependencies
+        run: npm i
+      - name: Build frontend assets
+        run: npm run prod
+      - name: Build the site
+        run: php hyde build --pretty-urls --run-prettier
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: _site
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "gh-pages"
+      - name: Empty site directory
+        run: rm -rf *
+      - name: Download site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: "."
+      - name: Create .nojekyll file
+        run: touch .nojekyll
+      - name: Create CNAME
+        run: echo "www.notakrista.com" > CNAME
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "."
+          message: "Upload compiled site ${{ github.sha }}"

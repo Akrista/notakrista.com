@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "mikestead.dotenv",
+    "EditorConfig.EditorConfig",
+    "redhat.vscode-yaml",
+    "bradlc.vscode-tailwindcss",
+    "bmewburn.vscode-intelephense-client",
+    "onecentlin.laravel-blade",
+    "shufo.vscode-blade-formatter",
+    "IHunte.laravel-blade-wrapper"
+  ]
+}
